@@ -147,6 +147,12 @@ package = 'frame-system'
 tag = 'v2.0.0-rc2'
 version = '2.0.0-rc2'
 
+[dependencies.remittance]
+default-features = false
+package = 'pallet-remittance'
+path = '../pallets/remittance'
+version = '2.0.0-rc2'
+
 [dependencies.template]
 default-features = false
 package = 'pallet-template'
