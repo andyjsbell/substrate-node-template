@@ -64,8 +64,8 @@ decl_error! {
 	pub enum Error for Module<T: Trait> {
 		/// Value was None
 		NoneValue,
-		/// Value reached maximum and cannot be incremented further
-		StorageOverflow,
+		/// Values are Equal
+		EqualValue,
 	}
 }
 
@@ -85,7 +85,7 @@ decl_module! {
 		#[weight = 10_000]
 		fn set_deposit_fee(origin, fee: u32) -> dispatch::DispatchResult {
 			ensure!(fee > 0, <Error<T>>::NoneValue);
-
+			ensure!(fee != Self::deposit_fee(), <Error<T>>::EqualValue);
 			DepositFee::put(fee);
 			Ok(())
 		}

@@ -8,16 +8,15 @@ fn it_stores_fees() {
 	new_test_ext().execute_with(|| {
 		assert_ok!(RemittanceModule::set_deposit_fee(Origin::signed(1), 100));
 		assert_eq!(RemittanceModule::deposit_fee(), 100);
+
+		assert_noop!(
+			RemittanceModule::set_deposit_fee(Origin::signed(1), 0),
+			Error::<Test>::NoneValue
+		);
+
+		assert_noop!(
+			RemittanceModule::set_deposit_fee(Origin::signed(1), 100),
+			Error::<Test>::EqualValue
+		);
 	});
 }
-
-// #[test]
-// fn correct_error_for_none_value() {
-// 	new_test_ext().execute_with(|| {
-// 		// Ensure the correct error is thrown on None value
-// 		assert_noop!(
-// 			RemittanceModule::cause_error(Origin::signed(1)),
-// 			Error::<Test>::NoneValue
-// 		);
-// 	});
-// }
