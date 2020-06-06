@@ -9,7 +9,7 @@
 /// For more guidance on Substrate FRAME, see the example pallet
 /// https://github.com/paritytech/substrate/blob/master/frame/example/src/lib.rs
 
-use frame_support::{decl_module, decl_storage, decl_event, decl_error, dispatch};
+use frame_support::{decl_module, decl_storage, decl_event, decl_error, dispatch, StorageMap};
 use frame_system::{self as system, ensure_signed};
 
 #[cfg(test)]
@@ -37,12 +37,14 @@ decl_storage! {
 	// It is important to update your storage name so that your pallet's
 	// storage items are isolated from other pallets.
 	// ---------------------------------vvvvvvvvvvvvvv
-	trait Store for Module<T: Trait> as TemplateModule {
+	trait Store for Module<T: Trait> as RemittanceModule {
 		// Just a dummy storage item.
 		// Here we are declaring a StorageValue, `Something` as a Option<u32>
 		// `get(fn something)` is the default getter which returns either the stored `u32` or `None` if nothing stored
 		Something get(fn something): Option<u32>;
-		
+		// Fees: map T::AccountId => u32;
+		// Value: map T::AccountId => u64;
+		Fees get(fn fees): map hasher(blake2_128_concat) T::AccountId => u64;
 	}
 }
 
