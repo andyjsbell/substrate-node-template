@@ -44,7 +44,8 @@ decl_storage! {
 		Something get(fn something): Option<u32>;
 		// Fees: map T::AccountId => u32;
 		// Value: map T::AccountId => u64;
-		Fees get(fn fees): map hasher(blake2_128_concat) T::AccountId => u64;
+		Fees get(fn fees): map hasher(blake2_128_concat) T::AccountId => u32;
+		DepositFee get(fn deposit_fee): u32; 
 	}
 }
 
