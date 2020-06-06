@@ -11,6 +11,7 @@
 
 use frame_support::{decl_module, decl_storage, decl_event, decl_error, dispatch, StorageMap};
 use frame_system::{self as system, ensure_signed};
+use frame_support::codec::{Encode, Decode};
 
 #[cfg(test)]
 mod mock;
@@ -26,7 +27,8 @@ pub trait Trait: system::Trait {
 	type Event: From<Event<Self>> + Into<<Self as system::Trait>::Event>;
 }
 
-struct Deposit<AccountId> {
+#[derive(Encode, Decode, Clone, Default, Debug)]
+pub struct Deposit<AccountId> {
 	remitter : AccountId,
 	expires : u32,
 	value : u32,
@@ -46,6 +48,7 @@ decl_storage! {
 		// Value: map T::AccountId => u64;
 		Fees get(fn fees): map hasher(blake2_128_concat) T::AccountId => u32;
 		DepositFee get(fn deposit_fee): u32; 
+		Deposits get(fn deposits): map hasher(blake2_128_concat) T::Hash => Deposit<T::AccountId>;
 	}
 }
 
