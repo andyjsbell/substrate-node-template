@@ -9,7 +9,7 @@
 /// For more guidance on Substrate FRAME, see the example pallet
 /// https://github.com/paritytech/substrate/blob/master/frame/example/src/lib.rs
 
-use frame_support::{decl_module, decl_storage, decl_event, decl_error, dispatch, StorageMap};
+use frame_support::{decl_module, decl_storage, decl_event, decl_error, dispatch, StorageMap, ensure};
 use frame_system::{self as system, ensure_signed};
 use frame_support::codec::{Encode, Decode};
 
@@ -84,9 +84,8 @@ decl_module! {
 
 		#[weight = 10_000]
 		fn set_deposit_fee(origin, fee: u32) -> dispatch::DispatchResult {
-			if fee == 0 {
-				Error()
-			}
+			ensure!(fee > 0, <Error<T>>::NoneValue);
+
 			DepositFee::put(fee);
 			Ok(())
 		}
