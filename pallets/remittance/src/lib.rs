@@ -52,7 +52,7 @@ decl_event!(
 		where 
 		<T as system::Trait>::AccountId,
 		<T as system::Trait>::Hash, {
-		Deposit(AccountId, Hash, u32, u32, u32),
+		Deposit(remitter: AccountId, Hash, u32, u32, u32),
 	}
 );
 
