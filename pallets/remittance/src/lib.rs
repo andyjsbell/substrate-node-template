@@ -81,5 +81,11 @@ decl_module! {
 		// Initializing events
 		// this is needed only if you are using events in your pallet
 		fn deposit_event() = default;
+
+		#[weight = 10_000]
+		fn set_deposit_fee(origin, fee: u32) -> dispatch::DispatchResult {
+			DepositFee::put(fee);
+			Ok(())
+		}
 	}
 }
