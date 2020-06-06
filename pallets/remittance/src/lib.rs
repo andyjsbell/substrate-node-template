@@ -55,7 +55,7 @@ decl_event!(
 		Deposit(AccountId, Hash, u32, u32, u32),
 		Transfer(Hash, AccountId, u64),
 		Withdraw(AccountId, u32),
-		DepositFee(AccountId, u32, u32),
+		FeeDeposited(AccountId, u32, u32),
 	}
 );
 
@@ -84,8 +84,12 @@ decl_module! {
 
 		#[weight = 10_000]
 		fn set_deposit_fee(origin, fee: u32) -> dispatch::DispatchResult {
+			let sender = ensure_signed(origin)?;
 			ensure!(fee > 0, <Error<T>>::NoneValue);
 			ensure!(fee != Self::deposit_fee(), <Error<T>>::EqualValue);
+			
+			Self::deposit_event(RawEvent::FeeDeposited(sender, 0, 0));
+			
 			DepositFee::put(fee);
 			Ok(())
 		}
