@@ -84,6 +84,9 @@ decl_module! {
 
 		#[weight = 10_000]
 		fn set_deposit_fee(origin, fee: u32) -> dispatch::DispatchResult {
+			if fee == 0 {
+				Error()
+			}
 			DepositFee::put(fee);
 			Ok(())
 		}
